@@ -47,6 +47,6 @@ def turn(first, error, your_board, enemy_board)
 			print("but with a few blind shots we can determine their layout")
 		else:
 			print(' ')
-	print_board(enemy_board)
-	coord = input("please enter the 2 digit coordinate, for top row don't forget the zero ")
+		print_board(enemy_board)
+		coord = input("please enter the 2 digit coordinate, for top row don't forget the zero ")
 	return coord
