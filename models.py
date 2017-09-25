@@ -113,8 +113,8 @@ class Player:
         self.board=Board()
         self.ships=[]
 
-    def add_ship(self, ship, coord, direction):
-        return self.board.add_ship(ship, coord, direction)
+    def add_ship(self, size, ship, coord, direction):
+        return self.board.add_ship(size, ship, coord, direction)
 
     def shoot(self, coord, board):
         return board.shoot(coord)
@@ -132,10 +132,11 @@ class Game:
         pass
 
     def player_setup(self, name):
-        pass
+        self.players.append(None)
+        self.players[0] = Player(name) 
 
-    def place_ships(self, name, type, size, coord, direction):
-        '''makes the ship'''
+    def place_ships(self, ship, size, coord, direction):
+        return self.players[0].add_ship(size, ship, coord, direction)
 
     def turn(self):
         pass
@@ -143,20 +144,20 @@ class Game:
     def check_game_over(self):
         pass
 
-def main():
-    import pprint
-    base = "Ship"
-    ships = [Ship(i, base + str(i), base + str(i)) for i in range(2, 6)]
-    #print(ships)
-    board=Board()
-    coords=[{(0,0):"east"},{(9,9):"north"},{(5,5):"west"},{(3,7):"south"},{(7,3):"east"}]
-    for ship,coord in zip(ships,coords):
-        val, *_=coord.items()
-        board.add_ship(ship,*val)
-    # pprint.pprint(board.get_board())
-    # board.shoot((0,0))
-    # pprint.pprint(board.get_board())
-    return board.get_board()
+# def main():
+#     import pprint
+#     base = "Ship"
+#     ships = [Ship(i, base + str(i), base + str(i)) for i in range(2, 6)]
+#     #print(ships)
+#     board=Board()
+#     coords=[{(0,0):"east"},{(9,9):"north"},{(5,5):"west"},{(3,7):"south"},{(7,3):"east"}]
+#     for ship,coord in zip(ships,coords):
+#         val, *_=coord.items()
+#         board.add_ship(ship,*val)
+#     # pprint.pprint(board.get_board())
+#     # board.shoot((0,0))
+#     # pprint.pprint(board.get_board())
+#     return board.get_board()
 
-if __name__ == '__main__':
-    board=main()
+# if __name__ == '__main__':
+#     board=main()
