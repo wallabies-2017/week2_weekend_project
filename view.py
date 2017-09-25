@@ -13,32 +13,52 @@ board_coord = [
 def print_board(board):
 	for i in range(10):
 		print("| {}| {}| {}| {}| {}| {}| {}| {}| {}| {}|".format(*board_coord[i]))
-		print("|_{}_|_{}_|_{}_|_{}_|_{}_|_{}_|_{}_|_{}_|_{}_|_{}_|".format(*row))
+		print("|_{}_|_{}_|_{}_|_{}_|_{}_|_{}_|_{}_|_{}_|_{}_|_{}_|".format(*board[i]))
 
-def begin(error, name=None):
+def begin(error, name=None, ship_name=None):
 	if name is None:
-		input("Please give me your name: ")
+		player = input("Please give me your name: ")
+	else:
+		player = name
 	for row in board_coord:
 		print("| {}| {}| {}| {}| {}| {}| {}| {}| {}| {}|".format(*row))
 		print("|___|___|___|___|___|___|___|___|___|___|")
 	if error:
 		print("Sorry, your last entry was incorrect, let's try again")
-	print('The first ship is 5 spaces long,') 
-	ship = input("What would you like to call this ship? ")
+	print('The first ship is 5 spaces long,')
+	if ship_name is None:
+		ship = input("What would you like to call this ship? ")
+	else:
+		ship = ship_name
 	print('first I will ask for intital coordinate then I will ask for the direction')
-	coord = input("please enter the 2 digit coordinate, for top row don't forget the zero ")
+	incorrect = True
+	while incorrect:
+		coord = input("please enter the 2 digit coordinate, for top row don't forget the zero ")
+		if len(coord)==2:	
+			coords = list(coord)
+			if all(num.isdigit() for num in coords):
+				coords = [int(coords[0]), int(coords[1])]
+				incorrect = False
 	direct = input("please enter the orientation relative to this coordinate: east/west/north/south ")
-	return [player, ship, coord, direct]
+	return [player, ship, coords, direct]
 
 def next_setup(ship_len, your_board, error):
-	print_board(your_board)
+	print(your_board)
+	# print_board(your_board)
 	if error:
 		print("Sorry, your last entry was incorrect, let's try again")
 	print('the next ship is {} spaces long,'.format(ship_len)) 
 	ship_name = input("What would you like to call this ship? ")
-	coord = input("please enter the 2 digit coordinate, for top row don't forget the zero ")
+	incorrect = True
+	while incorrect:
+		coord = input("please enter the 2 digit coordinate, for top row don't forget the zero ")
+		if len(coord)==2:	
+			coords = list(coord)
+			if all(num.isdigit() for num in coords):
+				coords = [int(coords[0]), int(coords[1])]
+				incorrect = False
 	direct = input("please enter the orientation relative to this coordinate: east/west/north/south ")
-	return [ship_name, coord, direct]
+	return [ship_name, coords, direct]
 
 def turn(first, error, your_board, enemy_board):
 	if error:

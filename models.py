@@ -1,5 +1,5 @@
 BOARD_SIZE = 10
-EMPTY_CELL="~"
+EMPTY_CELL="_"
 SHIP="S"
 HIT="X"
 MISS="O"
@@ -65,6 +65,7 @@ class Board:
         if coordinates and all(self.is_empty(coordinate) for coordinate in coordinates):
             self.place_ship(ship, coordinates)
             self.ships.append(ship)
+            return True
         else:
             return False
 
@@ -80,11 +81,10 @@ class Board:
         return self._board
 
 class Ship:
-    def __init__(self,size,name,type,hits=0):
+    def __init__(self,size,name,hits=0):
         self.size=size
         self.hits=hits
         self.name=name
-        self.type=type
 
     def __str__(self):
         return "<Ship: size={}, name={}, type={}, hits={}>".format(
@@ -111,10 +111,9 @@ class Player:
     def __init__(self,name):
         self.name=name
         self.board=Board()
-        self.ships=[]
 
-    def add_ship(self, size, ship, coord, direction):
-        return self.board.add_ship(size, ship, coord, direction)
+    def add_ship(self, ship, coord, direction):
+        return self.board.add_ship(ship, coord, direction)
 
     def shoot(self, coord, board):
         return board.shoot(coord)
@@ -135,8 +134,9 @@ class Game:
         self.players.append(None)
         self.players[0] = Player(name) 
 
-    def place_ships(self, ship, size, coord, direction):
-        return self.players[0].add_ship(size, ship, coord, direction)
+    def place_ships(self, name, size, coord, direction):
+        ship = Ship(size, name)
+        return self.players[0].add_ship(ship, coord, direction)
 
     def turn(self):
         pass
