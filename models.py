@@ -87,14 +87,15 @@ class Ship:
         self.name=name
 
     def __str__(self):
-        return "<Ship: size={}, name={}, type={}, hits={}>".format(
-            repr(self.size), repr(self.name), repr(self.type), repr(self.hits)
-        )
+        return "S"
+        # "<Ship: size={}, name={}, hits={}>".format(
+        #     repr(self.size), repr(self.name), repr(self.type), repr(self.hits)
+        # )
 
-    def __repr__(self):
-        return "Ship(size={}, name={}, type={}, hits={})".format(
-            repr(self.size), repr(self.name), repr(self.type), repr(self.hits)
-        )
+    # def __repr__(self):
+    #     return "Ship(size={}, name={}, type={}, hits={})".format(
+    #         repr(self.size), repr(self.name), repr(self.type), repr(self.hits)
+    #     )
 
     def is_sunk(self):
         if self.size == self.hits:
@@ -132,11 +133,15 @@ class Game:
 
     def player_setup(self, name):
         self.players.append(None)
-        self.players[0] = Player(name) 
+        self.players[0] = Player(name)
 
-    def place_ships(self, name, size, coord, direction):
+    def player2_setup(self, name):
+        self.players.append(None)
+        self.players[1] = Player(name) 
+
+    def place_ships(self, player, name, size, coord, direction):
         ship = Ship(size, name)
-        return self.players[0].add_ship(ship, coord, direction)
+        return self.players[player].add_ship(ship, coord, direction)
 
     def turn(self):
         pass
