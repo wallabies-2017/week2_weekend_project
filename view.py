@@ -40,7 +40,7 @@ def next_setup(ship_len, your_board, error):
 	direct = input("please enter the orientation relative to this coordinate: east/west/north/south ")
 	return [ship_name, coord, direct]
 
-def turn(first, error, your_board, enemy_board)
+def turn(first, error, your_board, enemy_board):
 	if error:
 		coord = input("INVALID SELECTION, please enter the 2 digit coordinate, for top row don't forget the zero ")
 	else:
