@@ -9,7 +9,7 @@ class Board:
     def __init__(self):
         self._board = self.creat_board()
         self.ships = []
-        self.shots = ()
+        self.shots = set()
 
     def creat_board(self):
         return [[EMPTY_CELL]*BOARD_SIZE for _ in range(BOARD_SIZE)]
@@ -80,6 +80,16 @@ class Board:
     def get_board(self):
         return self._board
 
+    def creat_represen(self):
+        matrix = [[EMPTY_CELL]*BOARD_SIZE for _ in range(BOARD_SIZE)]
+        for i in range(BOARD_SIZE):
+            for j in range(BOARD_SIZE):
+                if not isinstance(self._board[i][j], str):
+                    matrix[i][j] = 'S'
+                else:
+                    matrix[i][j] = self._board[i][j]
+        return matrix
+
 class Ship:
     def __init__(self,size,name,hits=0):
         self.size=size
@@ -116,11 +126,11 @@ class Player:
     def add_ship(self, ship, coord, direction):
         return self.board.add_ship(ship, coord, direction)
 
-    def shoot(self, coord, board):
-        return board.shoot(coord)
+    def shoot(self, coord):
+        return self.board.shoot(coord)
 
     def get_board(self):
-        return self.board
+        return self.board.creat_represen()
 
 
 class Game:
@@ -141,13 +151,26 @@ class Game:
 
     def place_ships(self, player, name, size, coord, direction):
         ship = Ship(size, name)
-        return self.players[player].add_ship(ship, coord, direction)
+        if self.players[player].add_ship(ship, coord, direction):
+            return self.players[player].get_board()
+        else:
+            return False
 
-    def turn(self):
-        pass
+    def print_boards(self, player, enemy=None):
+        if enemy is not None:
+            return [self.players[player].get_board(), self.players[enemy].get_board()]
+        else:
+            return self.players[player].get_board()
+
+    def turn(self, enemy, coords):
+        if self.players[enemy].shoot(coords):
+            return True
+        else:
+            return False
+
 
     def check_game_over(self):
-        pass
+        return True
 
 # def main():
 #     import pprint
